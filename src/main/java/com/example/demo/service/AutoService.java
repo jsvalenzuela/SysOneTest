@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.ResponseDTO;
 import com.example.demo.converter.ConvertidorAutoService;
 import com.example.demo.entities.Auto;
+import com.example.demo.entities.Variante;
 import com.example.demo.model.MAuto;
 import com.example.demo.repository.AutoRepositorio;
+import com.example.demo.repository.OpcionRepositorio;
+import com.example.demo.repository.VarianteRepositorio;
 
 
 @Service("autoService")
@@ -19,6 +22,11 @@ public class AutoService {
 	@Autowired
 	@Qualifier("repositorioAuto")
 	private AutoRepositorio autoRepositorio;
+	@Autowired
+	private OpcionService opcionService;
+	@Autowired
+	private VarianteService varianteService;
+	
 	@Autowired
 	@Qualifier("convertidorAutoService")
 	private ConvertidorAutoService convertidorAutoService;
@@ -41,6 +49,15 @@ public class AutoService {
 		return response;
 	}
 	
+	public void guardarAuto(Integer idVariante)
+	{
+		if(idVariante != null)
+		{
+			Variante va = this.varianteService.obtenerVariante(idVariante);
+			Integer maxCodigo = this.autoRepositorio.devolverCodigoAutoMaximo();
+		}
+	}
+
 	public  ResponseDTO obtenerAutoPorCodigo(Integer codigoAuto)
 	{
 		ResponseDTO response = null;
