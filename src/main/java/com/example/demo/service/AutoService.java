@@ -80,7 +80,7 @@ public class AutoService {
 				{
 					Integer cantidadOpciones = this.opcionService.devolverCantidadOpciones(listaId);
 					if(cantidadOpciones < listaId.size())
-						throw new Exception("Una de las variantes no existe");
+						throw new Exception("Una de las opciones no existe");
 					listaOpcion = this.opcionService.devolverOpcionConListadoId(listaId);
 				}
 				maxCodigo++;
