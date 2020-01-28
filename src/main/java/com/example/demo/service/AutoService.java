@@ -51,12 +51,13 @@ public class AutoService {
 		return response;
 	}
 	
-	public void guardarAuto(Integer idVariante, List<Integer> listaId) throws Exception
+	public ResponseDTO guardarAuto(Integer idVariante, List<Integer> listaId) throws Exception
 	{
+		ResponseDTO response = null;
 		if(idVariante != null)
 		{
+			response = new ResponseDTO();
 			Variante va = this.varianteService.obtenerVariante(idVariante);
-			//List<Opcion> opc = this.opcionService.obtenerTodasLasOpciones();
 			if(va != null)
 			{
 				Integer maxCodigo = this.autoRepositorio.devolverCodigoAutoMaximo();
@@ -71,6 +72,7 @@ public class AutoService {
 				maxCodigo++;
 				List<Auto> autosLista = generarRegistrosInsert(maxCodigo, va, listaOpcion);
 				this.autoRepositorio.saveAll(autosLista);
+				response = this.convertidorAutoService.generarResponse(autosLista);
 			}
 			else
 			{
@@ -81,6 +83,7 @@ public class AutoService {
 		{
 			throw new Exception("campo idVariante vacio");
 		}
+		return response;
 	}
 	
 	private List<Auto> generarRegistrosInsert(Integer codigoAuto,Variante variante,List<Opcion> listaOpcion)

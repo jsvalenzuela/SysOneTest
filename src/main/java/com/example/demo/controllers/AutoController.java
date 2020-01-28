@@ -47,8 +47,9 @@ public class AutoController {
 	}
 	
 	@PostMapping("/guardarAuto")
-	public void guardarAuto(@RequestParam(value="idVariante") Integer idVariante, @RequestParam(value="idOpciones[]") Integer[] idOpciones )
+	public ResponseDTO guardarAuto(@RequestParam(value="idVariante") Integer idVariante, @RequestParam(value="idOpciones[]") Integer[] idOpciones )
 	{
+		ResponseDTO response = null;
 		try
 		{
 			List<Integer> listaId = null;
@@ -61,17 +62,14 @@ public class AutoController {
 				}
 					
 			}
-			service.guardarAuto(idVariante,listaId);
+			response = service.guardarAuto(idVariante,listaId);
 		}
 		catch(Exception e){
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, "Error procesando la solicitud. " + e.getMessage(), e);
 			
 		}
+		return response;
 	}
-	//@RequestParam(value="uuidPaginas[]") String[] includeStates, @RequestParam(value="nroDocumento") Integer nroDoc
-	/*catch(Exception e){
-			throw new ResponseStatusException(
-			          HttpStatus.NOT_FOUND, "Error procesando el lote. Revisar id", e);
-		}*/
+	
 }
