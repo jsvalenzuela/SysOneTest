@@ -16,4 +16,6 @@ public interface AutoRepositorio extends JpaRepository<Auto, Serializable>
 	public abstract Auto findOneByCodigoAuto(Integer codigo);
 	@Query("select max(a.codigoAuto) from Auto a ")
 	public Integer devolverCodigoAutoMaximo();
+	
+	
 }

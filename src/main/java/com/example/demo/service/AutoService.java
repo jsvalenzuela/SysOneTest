@@ -42,6 +42,20 @@ public class AutoService {
 		return listaMAuto;
 	}
 	
+	//con el codigo del auto lo borro
+	public void borrarAuto(Integer codigoAuto) throws Exception
+	{
+		List<Auto> listaAuto = this.autoRepositorio.findByCodigoAuto(codigoAuto);
+		if(listaAuto != null && !listaAuto.isEmpty())
+		{
+			this.autoRepositorio.deleteAll(listaAuto);
+		}
+		else
+		{
+			throw new Exception("Auto Inexistente. Intente nuevamente");
+		}
+	}
+	
 	public ResponseDTO devolverCodigoYNombre(Integer codigoAuto)
 	{
 		ResponseDTO response = new ResponseDTO();

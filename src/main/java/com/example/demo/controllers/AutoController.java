@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,19 @@ public class AutoController {
 	public ResponseDTO obtenerResponse(@PathVariable Integer codigo)
 	{
 		return service.devolverCodigoYNombre(codigo);
+	}
+	@DeleteMapping("/borrarAuto")
+	public void borrarAuto(@RequestParam(value="codigoAuto") Integer codigoAuto)
+	{
+		try
+		{
+			this.service.borrarAuto(codigoAuto);
+		}
+		catch(Exception e){
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, "Error procesando la solicitud. " + e.getMessage(), e);
+			
+		}
 	}
 	
 	@PostMapping("/guardarAuto")
