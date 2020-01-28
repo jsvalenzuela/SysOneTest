@@ -23,6 +23,8 @@ http://localhost:8080/auto/borrarAuto?codigoAuto=5000 Para eliminar se debe espe
 
 http://localhost:8080/auto/guardarAuto/  Se usa para guardar un auto. Hay que ingresar el id de variante y en un array los id de opcion. El codigo de auto se genera autómaticamente.
 
+El campo id sería el codigo de auto en todos los responses de guardar y consulta
+
 ### Otros documentos en la entrega
 ##
 Se adjunta en la carpeta Documento unas capturas de pantalla para probar con postman.
