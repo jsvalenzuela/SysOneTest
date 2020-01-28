@@ -4,7 +4,7 @@ CREATE TABLE `sysonetest`.`opcion` ( `id` INT NOT NULL AUTO_INCREMENT , `nombreO
 CREATE TABLE `sysonetest`.`variante_opciones` ( `id` INT NOT NULL AUTO_INCREMENT , `idOpcion` INT NOT NULL , `idVariante` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = MyISAM;
 
 
-CREATE TABLE `sysonetest`.`auto` ( `id` INT NOT NULL AUTO_INCREMENT , `codigoAuto` INT NOT NULL , `idOpcion` INT NOT NULL , `idVariante` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = MyISAM;
+CREATE TABLE `sysonetest`.`auto` ( `id` INT NOT NULL AUTO_INCREMENT , `codigoAuto` INT , `idOpcion` INT  , `idVariante` INT  , PRIMARY KEY (`id`)) ENGINE = MyISAM;
 ALTER TABLE auto ADD CONSTRAINT FK_opcion FOREIGN KEY (idOpcion) REFERENCES opcion(id)
 ALTER TABLE auto ADD CONSTRAINT FK_variante FOREIGN KEY (IdVariante) REFERENCES variante(id)
 
