@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.ResponseDTO;
 import com.example.demo.converter.ConvertidorAutoService;
 import com.example.demo.entities.Auto;
+import com.example.demo.entities.Opcion;
 import com.example.demo.entities.Variante;
 import com.example.demo.model.MAuto;
 import com.example.demo.repository.AutoRepositorio;
@@ -49,15 +51,61 @@ public class AutoService {
 		return response;
 	}
 	
-	public void guardarAuto(Integer idVariante)
+	public void guardarAuto(Integer idVariante, List<Integer> listaId) throws Exception
 	{
 		if(idVariante != null)
 		{
 			Variante va = this.varianteService.obtenerVariante(idVariante);
-			Integer maxCodigo = this.autoRepositorio.devolverCodigoAutoMaximo();
+			//List<Opcion> opc = this.opcionService.obtenerTodasLasOpciones();
+			if(va != null)
+			{
+				Integer maxCodigo = this.autoRepositorio.devolverCodigoAutoMaximo();
+				List<Opcion> listaOpcion = null;
+				if(listaId != null && !listaId.isEmpty())
+				{
+					Integer cantidadOpciones = this.opcionService.devolverCantidadOpciones(listaId);
+					if(cantidadOpciones < listaId.size())
+						throw new Exception("Una de las variantes no existe");
+					listaOpcion = this.opcionService.devolverOpcionConListadoId(listaId);
+				}
+				maxCodigo++;
+				List<Auto> autosLista = generarRegistrosInsert(maxCodigo, va, listaOpcion);
+				this.autoRepositorio.saveAll(autosLista);
+			}
+			else
+			{
+				throw new Exception("No existe la variante buscada");
+			}
+		}
+		else
+		{
+			throw new Exception("campo idVariante vacio");
 		}
 	}
-
+	
+	private List<Auto> generarRegistrosInsert(Integer codigoAuto,Variante variante,List<Opcion> listaOpcion)
+	{
+		List<Auto> autoLista = new ArrayList<Auto>();
+		if(listaOpcion != null)
+		{
+			for(Opcion opc : listaOpcion)
+			{
+				Auto aux = new Auto();
+				aux.setIdOpcion(opc);
+				aux.setCodigoAuto(codigoAuto);
+				aux.setIdVariante(variante);
+				autoLista.add(aux);
+			}
+		}
+		else
+		{
+			Auto aux = new Auto();
+			aux.setCodigoAuto(codigoAuto);
+			aux.setIdVariante(variante);
+			autoLista.add(aux);
+		}
+		return autoLista;
+	}
 	public  ResponseDTO obtenerAutoPorCodigo(Integer codigoAuto)
 	{
 		ResponseDTO response = null;

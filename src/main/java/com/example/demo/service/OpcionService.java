@@ -26,4 +26,16 @@ public class OpcionService {
 		
 		return convertidor.convertirLista(registros);
 	}
+	public Integer devolverCantidadOpciones(List<Integer> listaIdOpciones)
+	{
+		return this.repositorio.devolverCantidadDeRegistros(listaIdOpciones);
+	}
+	public List<Opcion> obtenerTodasLasOpciones()
+	{
+		return this.repositorio.devolverOpciones();
+	}
+	public List<Opcion> devolverOpcionConListadoId(List<Integer> listaIdOpciones)
+	{
+		return this.repositorio.devolverOpciones(listaIdOpciones);
+	}
 }
